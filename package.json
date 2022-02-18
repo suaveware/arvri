@@ -1,0 +1,42 @@
+{
+  "name": "arvri-svelte",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer"
+  },
+  "postcss": {
+    "plugins": {
+      "postcss-import": {},
+      "tailwindcss": {}
+    }
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.15.3",
+    "@tailwindcss/line-clamp": "^0.2.2",
+    "daisyui": "^1.14.5",
+    "decamelize": "^6.0.0",
+    "lodash": "^4.17.21",
+    "meteor-node-stubs": "^1.1.0",
+    "postcss": "^8.3.9",
+    "slugify": "^1.6.1",
+    "svelte": "^3.44.0"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.js",
+      "server": "server/main.js"
+    },
+    "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "postcss-import": "^14.0.2",
+    "postcss-load-config": "^3.1.0",
+    "prettier": "^2.4.1",
+    "prettier-plugin-svelte": "^2.4.0",
+    "tailwindcss": "^2.2.17",
+    "tinro": "^0.6.7"
+  }
+}
