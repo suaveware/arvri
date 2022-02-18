@@ -1,10 +1,11 @@
 <script>
-  import { state } from "../../state";
   import { Route, router } from "tinro";
   import { ROUTES } from "../../routes";
   import Subject from "../molecules/Subject.svelte";
+  import { subjectsTreePlatter } from "../../silverPlatters/subjectsTreePlatter";
 
   const meta = router.meta();
+  const state = subjectsTreePlatter();
 
   $: subjectSlug = $meta.params.subjectSlug;
   $: curriculumSlug = $meta.params.curriculumSlug;

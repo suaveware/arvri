@@ -2,7 +2,7 @@
   import { flip } from "svelte/animate";
   import { router } from "tinro";
   import { state } from "../../state";
-  import { orderableChildren } from "../customa-actions/orderableChildren";
+  import { orderableChildren } from "../custom-actions/orderableChildren";
   import { moveArrayItem } from "../../helpers";
   import keyBy from "lodash/keyBy";
   import Link from "../icons/Link.svelte";

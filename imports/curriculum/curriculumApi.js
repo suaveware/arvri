@@ -5,14 +5,14 @@ export const makeCurriculum = ({
   slug = "",
   title = "",
   description = "",
-  rootSubjects = [],
+  rootSubjectsIds = [],
   groupOrder = [],
 } = {}) => ({
   ...(_id ? { _id } : {}),
   slug,
   title,
   description,
-  rootSubjects,
+  rootSubjectsIds,
   groupOrder,
 });
 
@@ -62,7 +62,7 @@ export const curriculumMethods = {
     }
 
     return CurriculumsCollection.update(curriculumId, {
-      $addToSet: { rootSubjects: subjectId },
+      $addToSet: { rootSubjectsIds: subjectId },
     });
   },
 };

@@ -1,23 +1,20 @@
 <script>
   import { router } from "tinro";
-  import { state } from "../../state";
   import { scale } from "svelte/transition";
   import keyBy from "lodash/keyBy";
   import groupBy from "lodash/groupBy";
   import Plus from "../icons/Plus.svelte";
   import AddSubjectModal from "../organisms/AddSubjectModal.svelte";
+  import { curriculumPlatter } from "../../silverPlatters/curriculumPlatter";
 
   const meta = router.meta();
+  const state = curriculumPlatter();
 
   let openAddSubjectModal = () => {};
 
   $: curriculumSlug = $meta.params.curriculumSlug;
-  $: curriculum = $state.curriculums.find(
-    ({ slug }) => slug === curriculumSlug
-  );
-  $: subjectsById = keyBy($state.subjects, "_id");
-  $: rootSubjects =
-    curriculum?.rootSubjects.map((subjectId) => subjectsById[subjectId]) || [];
+  $: curriculum = $state.curriculum;
+  $: rootSubjects = $state.rootSubjects;
   $: groupOrder = Array.from(
     new Set([
       ...(curriculum?.groupOrder || []),

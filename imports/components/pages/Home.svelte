@@ -1,7 +1,8 @@
 <script>
-  import Arvri from "../icons/Arvri.svelte";
+  import { homePlatter } from "../../silverPlatters/homePlatter";
+  // import Arvri from "../icons/Arvri.svelte";
 
-  import { state } from "../../state";
+  const state = homePlatter();
 </script>
 
 <div class="col-start-2 col-end-12 grid gap-6 grid-cols-2">
