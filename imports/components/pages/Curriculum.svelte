@@ -1,6 +1,5 @@
 <script>
   import { scale } from "svelte/transition";
-  import groupBy from "lodash/groupBy";
   import Plus from "../icons/Plus.svelte";
   import AddSubjectModal from "../organisms/AddSubjectModal.svelte";
   import { curriculumPlatter } from "../../silverPlatters/curriculumPlatter";
@@ -9,26 +8,17 @@
 
   let openAddSubjectModal = () => {};
 
-  $: curriculumSlug = $state.curriculumSlug;
-  $: curriculum = $state.curriculum;
-  $: rootSubjects = $state.rootSubjects;
-  $: groupOrder = Array.from(
-    new Set([
-      ...(curriculum?.groupOrder || []),
-      ...(rootSubjects?.map(({ group }) => group) || []),
-    ])
-  );
-  $: rootSubjectsByGroup = groupBy(rootSubjects, "group");
-  $: selectedGroup =
-    selectedGroup ||
-    groupOrder?.find((groupName) => rootSubjectsByGroup[groupName]?.length);
-
-  let handleTabPressed = (groupName) => {
-    selectedGroup = groupName;
-  };
+  $: ({
+    curriculum,
+    curriculumSlug,
+    groupOrder,
+    rootSubjectsByGroup,
+    selectedGroup,
+  } = $state);
 </script>
 
 <AddSubjectModal
+  {state}
   bind:openModal={openAddSubjectModal}
   parentCurriculum={curriculum}
 />
@@ -64,7 +54,7 @@
         {#if rootSubjectsByGroup[group]?.length}
           <button
             class="tab tab-bordered space-x-2"
-            on:click={() => handleTabPressed(group)}
+            on:click={() => state.selectGroup(group)}
             class:tab-active={group === selectedGroup}
           >
             <span>{group || "Ungrouped"}</span>
