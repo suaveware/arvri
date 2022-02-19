@@ -26,10 +26,12 @@ export const subjectsTreePlatter = makePlatter(({ update, meta }) => {
 
   return {
     // Content
+    saveContent: (content) => callMethod("contents.save", content),
     upvoteContent: (contentId) => callMethod("contents.upvote", contentId),
 
     // Subject
     saveSubject: (subject) => callMethod("subjects.save", subject),
+    removeSubject: (subjectId) => callMethod("subjects.remove", subjectId),
     reorderChildren: (subjectId, newOrder) =>
       callMethod("subjects.reorderChildren", subjectId, newOrder),
     addSubjectChild: (subjectId, childId) =>

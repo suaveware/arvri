@@ -1,8 +1,8 @@
 <script>
-  import { state } from "../../state";
   import { makeSubject } from "../../subject/subjectApi";
   import Modal from "../atoms/Modal.svelte";
 
+  export let state;
   export let openModal = () => {};
 
   export let subject = makeSubject();

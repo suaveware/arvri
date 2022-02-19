@@ -103,8 +103,12 @@
   parentSubject={subject}
   bind:openModal={openAddSubjectModal}
 />
-<RemoveSubjectModal bind:openModal={openRemoveSubjectModal} {subject} />
-<AddContentModal bind:openModal={openAddContentModal} parentSubject={subject} />
+<RemoveSubjectModal {state} bind:openModal={openRemoveSubjectModal} {subject} />
+<AddContentModal
+  {state}
+  bind:openModal={openAddContentModal}
+  parentSubject={subject}
+/>
 <AccountRequiredModal bind:openModal={openAccountRequiredModal} />
 
 <div class="col-start-2 col-end-12 space-y-4">
