@@ -1,9 +1,14 @@
 import { makePlatter } from "./makePlatter";
+import { router } from "tinro";
 import { Tracker } from "meteor/tracker";
 import { CurriculumsCollection } from "../curriculum/curriculumApi";
 import { SubjectsCollection } from "../subject/subjectApi";
 
-export const curriculumPlatter = makePlatter(({ update, meta }) => {
+export const curriculumPlatter = makePlatter(({ update }) => {
+  const meta = router.meta();
+
+  Meteor.subscribe("curriculums");
+  Meteor.subscribe("subjects");
 
   // https://docs.meteor.com/api/tracker.html
   Tracker.autorun(() => {

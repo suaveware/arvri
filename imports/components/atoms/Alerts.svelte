@@ -1,6 +1,7 @@
 <script>
-  import { state } from "../../state";
   import { fly } from "svelte/transition";
+
+  export let state;
 </script>
 
 <div

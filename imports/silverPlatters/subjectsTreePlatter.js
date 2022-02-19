@@ -1,10 +1,18 @@
 import { makePlatter } from "./makePlatter";
+import { router } from "tinro";
 import { Tracker } from "meteor/tracker";
 import { SubjectsCollection } from "../subject/subjectApi";
 import { CurriculumsCollection } from "../curriculum/curriculumApi";
+import { ContentsCollection } from "../content/contentApi";
 import { callMethod } from "../helpers";
 
-export const subjectsTreePlatter = makePlatter(({ update, meta }) => {
+export const subjectsTreePlatter = makePlatter(({ update }) => {
+  const meta = router.meta();
+
+  Meteor.subscribe("subjects");
+  Meteor.subscribe("contents");
+  Meteor.subscribe("curriculums");
+
   // https://docs.meteor.com/api/tracker.html
   Tracker.autorun(() => {
     const subject = SubjectsCollection.findOne({ slug: meta.params.subjectSlug });

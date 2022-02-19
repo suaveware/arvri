@@ -1,7 +1,7 @@
 <script>
   import { Route, router } from "tinro";
-  import { state } from "./state";
   import { ROUTES } from "./routes";
+  import { makePlatter } from "./silverPlatters/makePlatter";
   import Arvri from "./components/icons/Arvri.svelte";
   import User from "./components/icons/User.svelte";
   import Alerts from "./components/atoms/Alerts.svelte";
@@ -11,6 +11,7 @@
   import Home from "./components/pages/Home.svelte";
   import SignUp from "./components/pages/SignUp.svelte";
 
+  const state = makePlatter()();
   const themeList = [
     { value: "light", label: "Light" },
     { value: "dark", label: "Dark" },
@@ -60,7 +61,7 @@
   class="w-full h-full flex flex-col bg-base-200 text-base-content oveflow-y-scroll overflow-x-hidden"
   data-theme={theme}
 >
-  <Alerts />
+  <Alerts {state} />
 
   <div
     class="grid gap-6 grid-cols-12 pb-24 grid-rows-none max-w-screen-xl mx-auto w-full"

@@ -1,6 +1,5 @@
 import { writable } from "svelte/store";
 import { Tracker } from "meteor/tracker";
-import { router } from "tinro";
 
 const makeState = ({
   alerts = [],
@@ -15,7 +14,8 @@ const makeState = ({
 // Platter functions serve the state in a silver plattter.
 export const makePlatter = (builder, defaultState = {}) => (...builderArgs) => {
   const { subscribe, set, update } = writable({ ...makeState(), ...defaultState });
-  const meta = router.meta();
+
+  Meteor.subscribe("user.details");
 
   Tracker.autorun(() => {
     const user = Meteor.user({ fields: { username: 1, isAdmin: 1 } });
@@ -58,8 +58,7 @@ export const makePlatter = (builder, defaultState = {}) => (...builderArgs) => {
 
     // The builder function can modify the state with update, set and add 
     // more methods to the platter
-    ...(builder?.({ subscribe, set, update, router, meta }, ...builderArgs) || {}),
+    ...(builder?.({ subscribe, set, update }, ...builderArgs) || {}),
   }
 }
-
 
