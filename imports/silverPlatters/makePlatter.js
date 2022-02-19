@@ -14,26 +14,26 @@ const makeState = ({
 // component initialization (in the root indentation of a <script> tag).
 // Platter functions serve the state in a silver plattter.
 export const makePlatter = (builder, defaultState = {}) => {
-  const { subscribe, set, update } = writable({ ...makeState(), ...defaultState });
-
-  // Log the state to the console everytime it changes in development
-  if (Meteor.isDevelopment) {
-    subscribe((...args) => console.info("STATE", ...args));
-  }
-
-  Tracker.autorun(() => {
-    const user = Meteor.user({ fields: { username: 1, isAdmin: 1 } });
-    const userId = Meteor.userId();
-
-    update((currentState) => ({
-      ...currentState,
-      user,
-      userId,
-    }));
-  });
-
   return (...builderArgs) => {
+    const { subscribe, set, update } = writable({ ...makeState(), ...defaultState });
     const meta = router.meta();
+
+    // Log the state to the console everytime it changes in development
+    if (Meteor.isDevelopment && Meteor.isClient) {
+      Window.logState = () => subscribe((...args) => console.info("STATE", ...args));
+    }
+
+    Tracker.autorun(() => {
+      const user = Meteor.user({ fields: { username: 1, isAdmin: 1 } });
+      const userId = Meteor.userId();
+
+      update((currentState) => ({
+        ...currentState,
+        user,
+        userId,
+      }));
+    });
+
 
     return {
       subscribe,

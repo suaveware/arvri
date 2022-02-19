@@ -34,8 +34,6 @@
   let openRemoveSubjectModal = () => {};
   let openAccountRequiredModal = () => {};
 
-  $: console.log("childrenSubjects", childrenSubjects);
-
   $: {
     breadcrumbs = [
       { name: curriculumTitle, path: `/${curriculumSlug}`, icon: Home },

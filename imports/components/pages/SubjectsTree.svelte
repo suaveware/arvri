@@ -17,6 +17,7 @@
   // component of the recursion
   let childSelf = null;
   $: isEndOfRecursion = !childSelf;
+  $: console.log(state.id, $state.subject?.title, childSelf);
 </script>
 
 <Route path={ROUTES.SUBJECT}>
