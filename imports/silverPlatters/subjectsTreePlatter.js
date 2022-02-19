@@ -13,7 +13,7 @@ export const subjectsTreePlatter = makePlatter(({ update, meta }) => {
 
     update((currentState) => ({
       ...currentState,
-      loading: !!subject,
+      loading: !subject,
       subject,
       curriculum,
       curriculumSlug: meta.params.curriculumSlug,

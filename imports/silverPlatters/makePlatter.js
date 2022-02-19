@@ -27,7 +27,6 @@ export const makePlatter = (builder, defaultState = {}) => {
 
     update((currentState) => ({
       ...currentState,
-      loading: false,
       user,
       userId,
     }));

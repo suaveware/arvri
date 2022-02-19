@@ -12,7 +12,7 @@ export const curriculumPlatter = makePlatter(({ update, meta }) => {
 
     update((currentState) => ({
       ...currentState,
-      loading: !!curriculum,
+      loading: !curriculum,
       curriculum,
       rootSubjects,
       curriculumSlug: meta.params.curriculumSlug
