@@ -2,7 +2,6 @@
   import { Accounts } from "meteor/accounts-base";
   import { ROUTES } from "../../routes";
   import { router } from "tinro";
-  import { state } from "../../state";
 
   let email = "";
   let password = "";
