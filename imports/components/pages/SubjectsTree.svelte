@@ -10,6 +10,8 @@
   $: curriculum = $state.curriculum;
   $: curriculumTitle = curriculum?.title;
   $: subject = $state.subject;
+  $: subjectContents = $state.subjectContents;
+  $: childrenSubjects = $state.childrenSubjects;
 
   // This is a recursive component. This variable helps us if we are the final
   // component of the recursion
@@ -24,7 +26,13 @@
 <!-- Show all subjects that are children of subjectId -->
 {#if isEndOfRecursion}
   {#if subject}
-    <Subject {subject} {curriculumSlug} {curriculumTitle} />
+    <Subject
+      {subject}
+      {curriculumSlug}
+      {curriculumTitle}
+      {subjectContents}
+      {childrenSubjects}
+    />
   {:else if !$state.loading}
     <div class="col-span-full w-full h-full">
       <h1

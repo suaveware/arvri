@@ -1,18 +1,15 @@
 <script>
-  import { router } from "tinro";
   import { scale } from "svelte/transition";
-  import keyBy from "lodash/keyBy";
   import groupBy from "lodash/groupBy";
   import Plus from "../icons/Plus.svelte";
   import AddSubjectModal from "../organisms/AddSubjectModal.svelte";
   import { curriculumPlatter } from "../../silverPlatters/curriculumPlatter";
 
-  const meta = router.meta();
   const state = curriculumPlatter();
 
   let openAddSubjectModal = () => {};
 
-  $: curriculumSlug = $meta.params.curriculumSlug;
+  $: curriculumSlug = $state.curriculumSlug;
   $: curriculum = $state.curriculum;
   $: rootSubjects = $state.rootSubjects;
   $: groupOrder = Array.from(
@@ -87,7 +84,8 @@
               {subject.title}
             </div>
             <p>
-              {subject.children.length} <span class="font-light">subjects</span>
+              {subject.childrenIds.length}
+              <span class="font-light">subjects</span>
             </p>
           </div>
         </a>

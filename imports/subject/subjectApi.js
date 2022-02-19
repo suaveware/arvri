@@ -8,7 +8,7 @@ export const makeSubject = ({
   title = "",
   description = "",
   group = "",
-  children = [],
+  childrenIds = [],
   dependencies = [],
 } = {}) => ({
   _id,
@@ -16,7 +16,7 @@ export const makeSubject = ({
   title,
   description,
   group,
-  children,
+  childrenIds,
   dependencies,
 });
 
@@ -74,7 +74,7 @@ export const subjectMethods = {
     }
 
     return SubjectsCollection.update(subjectId, {
-      $addToSet: { children: childId },
+      $addToSet: { childrenIds: childId },
     });
   },
   ["subjects.reorderChildren"](subjectId, newOrder) {
@@ -84,7 +84,7 @@ export const subjectMethods = {
     }
 
     return SubjectsCollection.update(subjectId, {
-      $set: { children: newOrder },
+      $set: { childrenIds: newOrder },
     });
   },
   ["subjects.remove"](subjectId) {
@@ -94,7 +94,7 @@ export const subjectMethods = {
     }
 
     const parentSubjects = SubjectsCollection.find(
-      { children: subjectId },
+      { childrenIds: subjectId },
       { fields: { _id: 1 } }
     ).fetch();
     const parentCurriculums = CurriculumsCollection.find(
@@ -106,7 +106,7 @@ export const subjectMethods = {
 
     SubjectsCollection.update(
       { _id: { $in: parentSubjectsIds } },
-      { $pull: { children: subjectId } },
+      { $pull: { childrenIds: subjectId } },
       { multi: true }
     );
     CurriculumsCollection.update(

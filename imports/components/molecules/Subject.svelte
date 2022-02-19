@@ -1,7 +1,6 @@
 <script>
   import { flip } from "svelte/animate";
   import { router } from "tinro";
-  import { state } from "../../state";
   import { orderableChildren } from "../custom-actions/orderableChildren";
   import { moveArrayItem } from "../../helpers";
   import keyBy from "lodash/keyBy";
@@ -23,8 +22,10 @@
   const meta = router.meta();
 
   export let subject;
+  export let subjectContents;
   export let curriculumSlug;
   export let curriculumTitle;
+  export let childrenSubjects;
 
   let isDragging = false;
   let breadcrumbs = [];
@@ -33,14 +34,8 @@
   let openRemoveSubjectModal = () => {};
   let openAccountRequiredModal = () => {};
 
-  $: subjectContents = $state.contents
-    .filter(({ subjectId }) => subjectId === subject._id)
-    .sort((a, b) => b.upvotedBy.length - a.upvotedBy.length);
-  $: subjectById = keyBy($state.subjects, "_id");
-  $: subjectBySlug = keyBy($state.subjects, "slug");
-  $: childrenSubjects = subject?.children
-    .map((childId) => subjectById[childId])
-    .filter(Boolean);
+  $: console.log("childrenSubjects", childrenSubjects);
+
   $: {
     breadcrumbs = [
       { name: curriculumTitle, path: `/${curriculumSlug}`, icon: Home },
@@ -48,7 +43,7 @@
         .split("/")
         .map((slug, index) => ({
           icon: Collection,
-          name: subjectBySlug[slug]?.title,
+          name: slug,
           path: meta.match
             .split("/")
             .slice(0, index + 1)

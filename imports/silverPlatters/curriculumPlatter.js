@@ -14,8 +14,9 @@ export const curriculumPlatter = makePlatter(({ update, meta }) => {
       ...currentState,
       loading: !!curriculum,
       curriculum,
-      rootSubjects
+      rootSubjects,
+      curriculumSlug: meta.params.curriculumSlug
     }));
   });
-})
+}, { rootSubjects: [] });
 

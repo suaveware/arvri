@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import { Tracker } from "meteor/tracker";
 import { router } from "tinro";
 
 const makeState = ({
@@ -12,15 +13,27 @@ const makeState = ({
 // This constructs a platter function that has to be called inside a svelte
 // component initialization (in the root indentation of a <script> tag).
 // Platter functions serve the state in a silver plattter.
-export const makePlatter = (builder) => {
-  const { subscribe, set, update } = writable(makeState());
+export const makePlatter = (builder, defaultState = {}) => {
+  const { subscribe, set, update } = writable({ ...makeState(), ...defaultState });
 
   // Log the state to the console everytime it changes in development
   if (Meteor.isDevelopment) {
     subscribe((...args) => console.info("STATE", ...args));
   }
 
-  return () => {
+  Tracker.autorun(() => {
+    const user = Meteor.user({ fields: { username: 1, isAdmin: 1 } });
+    const userId = Meteor.userId();
+
+    update((currentState) => ({
+      ...currentState,
+      loading: false,
+      user,
+      userId,
+    }));
+  });
+
+  return (...builderArgs) => {
     const meta = router.meta();
 
     return {
@@ -52,7 +65,7 @@ export const makePlatter = (builder) => {
 
       // The builder function can modify the state with update, set and add 
       // more methods to the platter
-      ...(builder?.({ subscribe, set, update, router, meta }) || {}),
+      ...(builder?.({ subscribe, set, update, router, meta }, ...builderArgs) || {}),
     }
   }
 }
