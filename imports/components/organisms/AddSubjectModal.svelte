@@ -1,10 +1,10 @@
 <script>
-  import { state } from "../../state";
   import { makeSubject } from "../../subject/subjectApi";
   import Modal from "../atoms/Modal.svelte";
   import ChevronRight from "../icons/ChevronRight.svelte";
   import BookOpen from "../icons/BookOpen.svelte";
 
+  export let state;
   export let parentSubject;
   export let parentCurriculum;
   export let subject = makeSubject();

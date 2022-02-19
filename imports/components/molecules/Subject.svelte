@@ -29,8 +29,6 @@
   let openRemoveSubjectModal = () => {};
   let openAccountRequiredModal = () => {};
 
-  console.log("state", $state);
-
   $: ({
     user,
     userId,
@@ -73,6 +71,7 @@
       openAccountRequiredModal();
       return;
     }
+
     state.upvoteContent(conentId);
   };
 
@@ -99,7 +98,11 @@
 </script>
 
 <!-- MODALS -->
-<AddSubjectModal parentSubject={subject} bind:openModal={openAddSubjectModal} />
+<AddSubjectModal
+  {state}
+  parentSubject={subject}
+  bind:openModal={openAddSubjectModal}
+/>
 <RemoveSubjectModal bind:openModal={openRemoveSubjectModal} {subject} />
 <AddContentModal bind:openModal={openAddContentModal} parentSubject={subject} />
 <AccountRequiredModal bind:openModal={openAccountRequiredModal} />

@@ -25,9 +25,19 @@ export const subjectsTreePlatter = makePlatter(({ update, meta }) => {
   });
 
   return {
+    // Content
     upvoteContent: (contentId) => callMethod("contents.upvote", contentId),
+
+    // Subject
+    saveSubject: (subject) => callMethod("subjects.save", subject),
     reorderChildren: (subjectId, newOrder) =>
       callMethod("subjects.reorderChildren", subjectId, newOrder),
+    addSubjectChild: (subjectId, childId) =>
+      callMethod("subjects.addSubjectChild", subjectId, childId),
+
+    // Curriculum
+    addSubjectToCurriculum: (curriculumId, subjectId) =>
+      callMethod("curriculums.addSubject", curriculumId, subjectId),
   }
 }, { childrenSubjects: [], breadcrumbs: [] })
 
