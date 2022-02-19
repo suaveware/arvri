@@ -57,7 +57,7 @@
         <p class="mb-4 line-clamp-3 whitespace-pre-line">
           {curriculum.description}
         </p>
-        <p class="text-primary">{curriculum.rootSubjects.length} subjects</p>
+        <p class="text-primary">{curriculum.rootSubjects?.length} subjects</p>
       </div>
     </a>
   {/each}

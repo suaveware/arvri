@@ -1,7 +1,9 @@
 <script>
   import { ROUTES } from "../../routes";
   import { router } from "tinro";
-  import { state } from "../../state";
+  import { loginPlatter } from "../../silverPlatters/loginPlatter";
+
+  const state = loginPlatter();
 
   let email = "";
   let password = "";

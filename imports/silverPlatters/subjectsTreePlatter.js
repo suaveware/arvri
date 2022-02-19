@@ -2,6 +2,7 @@ import { makePlatter } from "./makePlatter";
 import { Tracker } from "meteor/tracker";
 import { SubjectsCollection } from "../subject/subjectApi";
 import { CurriculumsCollection } from "../curriculum/curriculumApi";
+import { callMethod } from "../helpers";
 
 export const subjectsTreePlatter = makePlatter(({ update, meta }) => {
   // https://docs.meteor.com/api/tracker.html
@@ -22,5 +23,11 @@ export const subjectsTreePlatter = makePlatter(({ update, meta }) => {
       childrenSubjects,
     }));
   });
+
+  return {
+    upvoteContent: (contentId) => callMethod("contents.upvote", contentId),
+    reorderChildren: (subjectId, newOrder) =>
+      callMethod("subjects.reorderChildren", subjectId, newOrder),
+  }
 }, { childrenSubjects: [], breadcrumbs: [] })
 

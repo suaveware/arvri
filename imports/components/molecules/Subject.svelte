@@ -3,7 +3,6 @@
   import { router } from "tinro";
   import { orderableChildren } from "../custom-actions/orderableChildren";
   import { moveArrayItem } from "../../helpers";
-  import keyBy from "lodash/keyBy";
   import Link from "../icons/Link.svelte";
   import Heart from "../icons/Heart.svelte";
   import Trash from "../icons/Trash.svelte";
@@ -21,11 +20,7 @@
 
   const meta = router.meta();
 
-  export let subject;
-  export let subjectContents;
-  export let curriculumSlug;
-  export let curriculumTitle;
-  export let childrenSubjects;
+  export let state;
 
   let isDragging = false;
   let breadcrumbs = [];
@@ -34,9 +29,21 @@
   let openRemoveSubjectModal = () => {};
   let openAccountRequiredModal = () => {};
 
+  console.log("state", $state);
+
+  $: ({
+    user,
+    userId,
+    subject,
+    childrenSubjects,
+    subjectContents,
+    curriculum,
+    curriculumSlug,
+  } = $state);
+
   $: {
     breadcrumbs = [
-      { name: curriculumTitle, path: `/${curriculumSlug}`, icon: Home },
+      { name: curriculum?.title, path: `/${curriculumSlug}`, icon: Home },
       ...meta.match
         .split("/")
         .map((slug, index) => ({
@@ -53,7 +60,7 @@
   }
 
   const handleAddContentOnClick = () => {
-    if ($state.userId) {
+    if (userId) {
       openAddContentModal();
       return;
     }
@@ -62,7 +69,7 @@
   };
 
   const handleHeartOnClick = (conentId) => {
-    if (!$state.userId) {
+    if (!userId) {
       openAccountRequiredModal();
       return;
     }
@@ -111,7 +118,7 @@
   <!-- TITLE -->
   <div class="flex justify-between">
     <h1 class="relative font-bold text-5xl mb-8 font-title">
-      {#if $state.user?.isAdmin}
+      {#if user?.isAdmin}
         <span class="flex space-x-1 absolute top-full left-0 transform">
           <button
             class="btn btn-sm btn-circle btn-ghost space-x-1 normal-case flex items-center"
@@ -139,7 +146,7 @@
   <span class="font-semibold p-5 flex">
     <span>{subject.title}</span>
   </span>
-  {#if $state.user?.isAdmin}
+  {#if user?.isAdmin}
     <div
       use:orderableChildren={{
         onStart: handleOnDragStart,
@@ -178,7 +185,7 @@
         >
           <span class="mr-1">{index + 1}</span>
           <span class="opacity-75">{child.title}</span>
-          {#if $state.user?.isAdmin}
+          {#if user?.isAdmin}
             <span class="opacity-75 ml-auto"><MenuAlt4 /></span>
           {/if}
         </a>
@@ -190,7 +197,7 @@
       No subjects
     </span>
   {/if}
-  {#if $state.user?.isAdmin}
+  {#if user?.isAdmin}
     <span class="flex items-center justify-center font-normal">
       <button
         class="btn btn-link font-normal normal-case space-x-1"
@@ -257,9 +264,7 @@
               >
                 {content.upvotedBy.length}
                 <Heart
-                  solid={content.upvotedBy.find(
-                    (userId) => userId === $state.userId
-                  )}
+                  solid={content.upvotedBy.find((userId) => userId === userId)}
                 />
               </button>
             </div>

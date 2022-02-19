@@ -13,59 +13,53 @@ const makeState = ({
 // This constructs a platter function that has to be called inside a svelte
 // component initialization (in the root indentation of a <script> tag).
 // Platter functions serve the state in a silver plattter.
-export const makePlatter = (builder, defaultState = {}) => {
-  return (...builderArgs) => {
-    const { subscribe, set, update } = writable({ ...makeState(), ...defaultState });
-    const meta = router.meta();
+export const makePlatter = (builder, defaultState = {}) => (...builderArgs) => {
+  const { subscribe, set, update } = writable({ ...makeState(), ...defaultState });
+  const meta = router.meta();
 
-    // Log the state to the console everytime it changes in development
-    if (Meteor.isDevelopment && Meteor.isClient) {
-      Window.logState = () => subscribe((...args) => console.info("STATE", ...args));
-    }
+  Tracker.autorun(() => {
+    const user = Meteor.user({ fields: { username: 1, isAdmin: 1 } });
+    const userId = Meteor.userId();
 
-    Tracker.autorun(() => {
-      const user = Meteor.user({ fields: { username: 1, isAdmin: 1 } });
-      const userId = Meteor.userId();
-
-      update((currentState) => ({
-        ...currentState,
-        user,
-        userId,
-      }));
-    });
+    update((currentState) => ({
+      ...currentState,
+      user,
+      userId,
+    }));
+  });
 
 
-    return {
-      subscribe,
-      set,
-      update,
+  return {
+    subscribe,
+    set,
+    update,
 
-      // General actions
-      addAlert: ({ message, state, duration = 5000, dismissable = true }) => {
-        const newAlert = { message, state, duration, dismissable };
-        const closeAlert = () =>
-          update((currentState) => ({
-            ...currentState,
-            alerts: currentState.alerts.filter((alert) => alert !== newAlert),
-          }));
-        newAlert.closeAlert = closeAlert;
-
-        // Add alert
+    // General actions
+    addAlert: ({ message, state, duration = 5000, dismissable = true }) => {
+      const newAlert = { message, state, duration, dismissable };
+      const closeAlert = () =>
         update((currentState) => ({
           ...currentState,
-          alerts: [...currentState.alerts, newAlert],
+          alerts: currentState.alerts.filter((alert) => alert !== newAlert),
         }));
+      newAlert.closeAlert = closeAlert;
 
-        // Delete it after duration
-        setTimeout(() => closeAlert(), duration);
+      // Add alert
+      update((currentState) => ({
+        ...currentState,
+        alerts: [...currentState.alerts, newAlert],
+      }));
 
-        return newAlert;
-      },
+      // Delete it after duration
+      setTimeout(() => closeAlert(), duration);
 
-      // The builder function can modify the state with update, set and add 
-      // more methods to the platter
-      ...(builder?.({ subscribe, set, update, router, meta }, ...builderArgs) || {}),
-    }
+      return newAlert;
+    },
+
+    // The builder function can modify the state with update, set and add 
+    // more methods to the platter
+    ...(builder?.({ subscribe, set, update, router, meta }, ...builderArgs) || {}),
   }
 }
+
 

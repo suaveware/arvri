@@ -6,18 +6,12 @@
 
   const state = subjectsTreePlatter();
 
-  $: curriculumSlug = $state.curriculumSlug;
-  $: curriculum = $state.curriculum;
-  $: curriculumTitle = curriculum?.title;
   $: subject = $state.subject;
-  $: subjectContents = $state.subjectContents;
-  $: childrenSubjects = $state.childrenSubjects;
 
   // This is a recursive component. This variable helps us if we are the final
   // component of the recursion
   let childSelf = null;
   $: isEndOfRecursion = !childSelf;
-  $: console.log(state.id, $state.subject?.title, childSelf);
 </script>
 
 <Route path={ROUTES.SUBJECT}>
@@ -27,13 +21,7 @@
 <!-- Show all subjects that are children of subjectId -->
 {#if isEndOfRecursion}
   {#if subject}
-    <Subject
-      {subject}
-      {curriculumSlug}
-      {curriculumTitle}
-      {subjectContents}
-      {childrenSubjects}
-    />
+    <Subject {state} />
   {:else if !$state.loading}
     <div class="col-span-full w-full h-full">
       <h1
