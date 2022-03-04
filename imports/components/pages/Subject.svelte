@@ -1,6 +1,6 @@
 <script>
   import { flip } from "svelte/animate";
-  import { meta } from "tinro";
+  import { meta, router } from "tinro";
   import { orderableChildren } from "../../customActions/orderableChildren";
   import { subjectPlatter } from "../../silverPlatters/subjectPlatter";
   import { moveArrayItem } from "../../helpers";
