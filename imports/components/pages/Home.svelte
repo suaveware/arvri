@@ -1,8 +1,10 @@
 <script>
-  import { homePlatter } from "../../silverPlatters/homePlatter";
-  // import Arvri from "../icons/Arvri.svelte";
+  import { CurriculumsCollection } from "../../curriculum/curriculumApi";
 
-  const state = homePlatter();
+  Meteor.subscribe("home");
+
+  const curriculums = CurriculumsCollection.find();
+  $: console.log($curriculums);
 </script>
 
 <div class="col-start-2 col-end-12 grid gap-6 grid-cols-2">
@@ -16,7 +18,6 @@
         community. You can add videos, articles, exercises, diagrams, anything
         to improve the overall learning process of your community.
       </p>
-      <!-- div class="text-primary pt-10"><Arvri /></div -->
     </span>
     <div class="flex items-center justify-center">
       <svg
@@ -48,7 +49,7 @@
     </div>
   </div>
   <h1 class="col-span-full text-2xl font-bold font-title">Start studying</h1>
-  {#each $state.curriculums as curriculum}
+  {#each $curriculums as curriculum}
     <a class="card shadow bg-base-100" href={curriculum.slug}>
       <div class="card-body">
         <div class="card-title">
