@@ -3,7 +3,7 @@
 
   Meteor.subscribe("page.home");
 
-  const curriculums = CurriculumsCollection.find();
+  const curriculums = CurriculumsCollection.find({}, { sort: { title:1 } });
 </script>
 
 <div class="col-start-2 col-end-12 grid gap-6 grid-cols-2">
