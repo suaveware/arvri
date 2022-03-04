@@ -9,8 +9,8 @@ import { SubjectsCollection } from "../subject/subjectApi";
 export const curriculumPlatter = makePlatter(({ update }) => {
   const meta = router.meta();
 
-  Meteor.subscribe("curriculums");
-  Meteor.subscribe("subjects");
+  Meteor.subscribe("user.details");
+  Meteor.subscribe("page.curriculum", {curriculumSlug: meta.params.curriculumSlug});
 
   // https://docs.meteor.com/api/tracker.html
   Tracker.autorun(() => {

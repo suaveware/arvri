@@ -8,6 +8,8 @@
   let errorMessage = "";
 
   const handleSignUpOnClick = () => {
+    // This function could be brought by a silver platter but it's the only thing
+    // used so I'm delaying it
     Accounts.createUser(
       {
         username: email,

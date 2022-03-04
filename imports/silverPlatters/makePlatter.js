@@ -12,7 +12,7 @@ const makeState = ({
 // This constructs a platter function that has to be called inside a svelte
 // component initialization (in the root indentation of a <script> tag).
 // Platter functions serve the state in a silver plattter.
-export const makePlatter = (builder, defaultState = {}) => (...builderArgs) => {
+export const makePlatter = (builder, defaultState = {}) => {
   const { subscribe, set, update } = writable({ ...makeState(), ...defaultState });
 
   Meteor.subscribe("user.details");
@@ -28,8 +28,7 @@ export const makePlatter = (builder, defaultState = {}) => (...builderArgs) => {
     }));
   });
 
-
-  return {
+  return (...builderArgs) => ({
     subscribe,
     set,
     update,
@@ -59,6 +58,6 @@ export const makePlatter = (builder, defaultState = {}) => (...builderArgs) => {
     // The builder function can modify the state with update, set and add 
     // more methods to the platter
     ...(builder?.({ subscribe, set, update }, ...builderArgs) || {}),
-  }
+  })
 }
 

@@ -6,8 +6,6 @@
 
   const state = curriculumPlatter();
 
-  let openAddSubjectModal = () => {};
-
   $: ({
     curriculum,
     curriculumSlug,
@@ -15,6 +13,8 @@
     rootSubjectsByGroup,
     selectedGroup,
   } = $state);
+
+  let openAddSubjectModal = () => {};
 </script>
 
 <AddSubjectModal

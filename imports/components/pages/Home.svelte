@@ -1,7 +1,7 @@
 <script>
   import { CurriculumsCollection } from "../../curriculum/curriculumApi";
 
-  Meteor.subscribe("home");
+  Meteor.subscribe("page.home");
 
   const curriculums = CurriculumsCollection.find();
   $: console.log($curriculums);

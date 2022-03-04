@@ -2,15 +2,16 @@
   import { flip } from "svelte/animate";
   import { router } from "tinro";
   import { orderableChildren } from "../custom-actions/orderableChildren";
+  import { subjectPlatter } from "../../silverPlatters/subjectPlatter";
   import { moveArrayItem } from "../../helpers";
   import Link from "../icons/Link.svelte";
   import Heart from "../icons/Heart.svelte";
   import Trash from "../icons/Trash.svelte";
   import Plus from "../icons/Plus.svelte";
   import Pencil from "../icons/Pencil.svelte";
-  import Home from "../icons/Home.svelte";
   import ChevronRight from "../icons/ChevronRight.svelte";
   import MenuAlt4 from "../icons/MenuAlt4.svelte";
+  import Home from "../icons/Home.svelte";
   import Collection from "../icons/Collection.svelte";
   import AddSubjectModal from "../organisms/AddSubjectModal.svelte";
   import RemoveSubjectModal from "../organisms/RemoveSubjectModal.svelte";
@@ -19,11 +20,9 @@
   import { makePath } from "../../helpers";
 
   const meta = router.meta();
-
-  export let state;
+  const state = subjectPlatter();
 
   let isDragging = false;
-  let breadcrumbs = [];
   let openAddSubjectModal = () => {};
   let openAddContentModal = () => {};
   let openRemoveSubjectModal = () => {};
@@ -37,25 +36,9 @@
     subjectContents,
     curriculum,
     curriculumSlug,
+    breadcrumbs,
   } = $state);
-
-  $: {
-    breadcrumbs = [
-      { name: curriculum?.title, path: `/${curriculumSlug}`, icon: Home },
-      ...meta.match
-        .split("/")
-        .map((slug, index) => ({
-          icon: Collection,
-          name: slug,
-          path: meta.match
-            .split("/")
-            .slice(0, index + 1)
-            .join("/"),
-        }))
-        .filter(({ name }) => name),
-    ];
-    breadcrumbs.pop();
-  }
+  $: console.log("childrenSubjects", childrenSubjects);
 
   const handleAddContentOnClick = () => {
     if (userId) {
@@ -114,11 +97,17 @@
 <div class="col-start-2 col-end-12 space-y-4">
   <!-- BREADCRUMBS -->
   <div class="flex space-x-4 opacity-75">
-    {#each breadcrumbs as { name, path, icon }}
+    {#each breadcrumbs as { name, path }, index}
       <a href={path} class="flex space-x-2 font-semibold">
-        <svelte:component this={icon} />
+	{#if !index}
+	  <Home/>
+	{:else}
+	  <Collection/>
+	{/if}
         <span class="font-title">{name}</span>
-        <ChevronRight />
+	{#if index < breadcrumbs.length - 1}
+          <ChevronRight />
+	{/if}
       </a>
     {/each}
   </div>

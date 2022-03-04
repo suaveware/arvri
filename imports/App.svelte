@@ -108,7 +108,7 @@
       </span>
     </div>
 
-    <Route breadcrumb="Home" firstmatch>
+    <Route firstmatch>
       <Route path={ROUTES.HOME}><Home /></Route>
       <Route path={ROUTES.SIGN_UP}>
         <SignUp />

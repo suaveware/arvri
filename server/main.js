@@ -7,14 +7,9 @@ import {
   curriculumMethods,
   makeCurriculum,
 } from "../imports/curriculum/curriculumApi";
+import "../imports/publications"
 
 Meteor.startup(() => {
-  Meteor.publish("user.details", () => {
-    return Meteor.users.find(
-      { _id: Meteor.userId() },
-      { fields: { isAdmin: 1 } }
-    );
-  });
 
   if (Meteor.isDevelopment) {
     const users = Meteor.users.find({}).fetch();
