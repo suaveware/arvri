@@ -1,9 +1,9 @@
 import { makePlatter } from "./makePlatter";
 import { router } from "tinro";
 import { Tracker } from "meteor/tracker";
-import { SubjectsCollection } from "../subject/subjectApi";
-import { CurriculumsCollection } from "../curriculum/curriculumApi";
-import { ContentsCollection } from "../content/contentApi";
+import { SubjectsCollection } from "../entities/subject/subjectApi";
+import { CurriculumsCollection } from "../entities/curriculum/curriculumApi";
+import { ContentsCollection } from "../entities/content/contentApi";
 import { callMethod } from "../helpers";
 
 // This has to be outside, otherwise we'll have a stale closure
@@ -32,8 +32,6 @@ export const subjectsTreePlatter = makePlatter(
         _id: { $in: subject?.childrenIds || [] },
       }).fetch();
 
-      console.log("refreshed state", { subject, curriculum });
-
       update((currentState) => ({
         ...currentState,
         loading: !subject,
@@ -52,7 +50,6 @@ export const subjectsTreePlatter = makePlatter(
     // https://github.com/AlexxNB/tinro#route-meta
     Tracker.autorun(refreshState);
     meta.subscribe((newMeta) => {
-      console.log("newMeta", newMeta);
       meta = newMeta || meta;
 
       refreshState();

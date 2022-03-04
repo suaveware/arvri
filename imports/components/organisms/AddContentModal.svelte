@@ -1,5 +1,5 @@
 <script>
-  import { makeContent } from "../../content/contentApi";
+  import { makeContent } from "../../entities/content/contentApi";
   import Modal from "../atoms/Modal.svelte";
   import ChevronRight from "../icons/ChevronRight.svelte";
   import BookOpen from "../icons/BookOpen.svelte";

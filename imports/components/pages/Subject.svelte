@@ -1,7 +1,7 @@
 <script>
   import { flip } from "svelte/animate";
   import { router } from "tinro";
-  import { orderableChildren } from "../custom-actions/orderableChildren";
+  import { orderableChildren } from "../../customActions/orderableChildren";
   import { subjectPlatter } from "../../silverPlatters/subjectPlatter";
   import { moveArrayItem } from "../../helpers";
   import Link from "../icons/Link.svelte";
@@ -34,11 +34,8 @@
     subject,
     childrenSubjects,
     subjectContents,
-    curriculum,
-    curriculumSlug,
     breadcrumbs,
   } = $state);
-  $: console.log("childrenSubjects", childrenSubjects);
 
   const handleAddContentOnClick = () => {
     if (userId) {

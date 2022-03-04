@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { isValidUrl } from "../helpers";
+import { isValidUrl } from "../../helpers";
 
 export const makeContent = ({
   _id,

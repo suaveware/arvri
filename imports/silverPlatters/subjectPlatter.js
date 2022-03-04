@@ -1,9 +1,9 @@
 import { makePlatter } from "./makePlatter";
 import { router } from "tinro";
 import { Tracker } from "meteor/tracker";
-import { SubjectsCollection } from "../subject/subjectApi";
-import { CurriculumsCollection } from "../curriculum/curriculumApi";
-import { ContentsCollection } from "../content/contentApi";
+import { SubjectsCollection } from "../entities/subject/subjectApi";
+import { CurriculumsCollection } from "../entities/curriculum/curriculumApi";
+import { ContentsCollection } from "../entities/content/contentApi";
 import { callMethod } from "../helpers";
 import keyBy from "lodash/keyBy";
 
@@ -72,15 +72,6 @@ export const subjectPlatter = makePlatter(
           path,
         })),
       ];
-
-      console.log("refreshed state", {
-        curriculum,
-        breadcrumbsSlugsAndPaths,
-        breadcrumbsSlugs,
-        breadcrumbsSubjects,
-        subjectBySlug,
-        breadcrumbs,
-      });
 
       update((currentState) => ({
         ...currentState,

@@ -1,10 +1,9 @@
 <script>
-  import { CurriculumsCollection } from "../../curriculum/curriculumApi";
+  import { CurriculumsCollection } from "../../entities/curriculum/curriculumApi";
 
   Meteor.subscribe("page.home");
 
   const curriculums = CurriculumsCollection.find();
-  $: console.log($curriculums);
 </script>
 
 <div class="col-start-2 col-end-12 grid gap-6 grid-cols-2">

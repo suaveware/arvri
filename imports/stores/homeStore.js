@@ -1,4 +1,4 @@
-import { CurriculumsCollection } from "../curriculum/curriculumApi";
+import { CurriculumsCollection } from "../entities/curriculum/curriculumApi";
 import { Tracker } from "meteor/tracker";
 import { writable } from "svelte/store";
 
@@ -12,7 +12,6 @@ export const makeHomeStore = () => {
 
   Tracker.autorun(() => {
     const curriculums = CurriculumsCollection.find({}).fetch();
-    console.log("curriculums", curriculums);
 
     store.update((currentState) => ({
       ...currentState,

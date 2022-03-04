@@ -1,12 +1,12 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
-import { contentMethods } from "../imports/content/contentApi";
-import { subjectMethods } from "../imports/subject/subjectApi";
+import { contentMethods } from "../imports/entities/content/contentApi";
+import { subjectMethods } from "../imports/entities/subject/subjectApi";
 import {
   CurriculumsCollection,
   curriculumMethods,
   makeCurriculum,
-} from "../imports/curriculum/curriculumApi";
+} from "../imports/entities/curriculum/curriculumApi";
 import "../imports/publications"
 
 Meteor.startup(() => {

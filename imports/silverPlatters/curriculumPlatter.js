@@ -3,8 +3,8 @@ import { router } from "tinro";
 import { callMethod } from "../helpers";
 import groupBy from "lodash/groupBy";
 import { Tracker } from "meteor/tracker";
-import { CurriculumsCollection } from "../curriculum/curriculumApi";
-import { SubjectsCollection } from "../subject/subjectApi";
+import { CurriculumsCollection } from "../entities/curriculum/curriculumApi";
+import { SubjectsCollection } from "../entities/subject/subjectApi";
 
 export const curriculumPlatter = makePlatter(({ update }) => {
   const meta = router.meta();

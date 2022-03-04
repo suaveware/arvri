@@ -1,6 +1,6 @@
 <script>
   import { Route } from "tinro";
-  import { ROUTES } from "../../routes";
+  import { ROUTES } from "../routes";
   import Subject from "./pages/Subject.svelte";
 
 

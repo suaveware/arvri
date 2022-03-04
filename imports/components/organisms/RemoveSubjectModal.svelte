@@ -1,5 +1,5 @@
 <script>
-  import { makeSubject } from "../../subject/subjectApi";
+  import { makeSubject } from "../../entities/subject/subjectApi";
   import Modal from "../atoms/Modal.svelte";
 
   export let state;

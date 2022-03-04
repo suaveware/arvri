@@ -1,5 +1,5 @@
-import { CurriculumsCollection } from "../imports/curriculum/curriculumApi";
-import { SubjectsCollection } from "../imports/subject/subjectApi";
+import { CurriculumsCollection } from "../imports/entities/curriculum/curriculumApi";
+import { SubjectsCollection } from "../imports/entities/subject/subjectApi";
 
 Meteor.publish("user.details", () => {
   return Meteor.users.find(

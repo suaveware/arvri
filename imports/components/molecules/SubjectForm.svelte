@@ -1,5 +1,5 @@
 <script>
-  import { makeSubject } from "../../subject/subjectApi";
+  import { makeSubject } from "../../entities/subject/subjectApi";
 
   export let subject = makeSubject();
   export let onSubmit = () => {};

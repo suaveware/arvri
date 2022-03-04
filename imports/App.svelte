@@ -7,7 +7,7 @@
   import Alerts from "./components/atoms/Alerts.svelte";
   import Login from "./components/pages/Login.svelte";
   import Curriculum from "./components/pages/Curriculum.svelte";
-  import SubjectsTree from "./components/pages/SubjectsTree.svelte";
+  import SubjectsTree from "./components/SubjectsTree.svelte";
   import Home from "./components/pages/Home.svelte";
   import SignUp from "./components/pages/SignUp.svelte";
 
