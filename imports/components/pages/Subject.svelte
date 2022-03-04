@@ -1,6 +1,6 @@
 <script>
   import { flip } from "svelte/animate";
-  import { router } from "tinro";
+  import { meta } from "tinro";
   import { orderableChildren } from "../../customActions/orderableChildren";
   import { subjectPlatter } from "../../silverPlatters/subjectPlatter";
   import { moveArrayItem } from "../../helpers";
@@ -19,7 +19,7 @@
   import AccountRequiredModal from "../organisms/AccountRequiredModal.svelte";
   import { makePath } from "../../helpers";
 
-  const meta = router.meta();
+  const { match } = meta();
   const state = subjectPlatter();
 
   let isDragging = false;
@@ -152,7 +152,7 @@
           draggable="false"
           class="p-5 font-normal flex w-full select-none cursor-pointer"
           on:click={() =>
-            !isDragging && router.goto(makePath([meta.match, child.slug]))}
+            !isDragging && router.goto(makePath([match, child.slug]))}
           animate:flip={{ duration: 200 }}
         >
           <div class="mr-1">
@@ -173,7 +173,7 @@
         <a
           draggable="false"
           class="p-5 font-normal flex w-full select-none cursor-pointer"
-          href={makePath([meta.match, child.slug])}
+          href={makePath([match, child.slug])}
           animate:flip={{ duration: 400 }}
         >
           <span class="mr-1">{index + 1}</span>

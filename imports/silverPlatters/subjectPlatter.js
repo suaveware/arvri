@@ -1,5 +1,5 @@
 import { makePlatter } from "./makePlatter";
-import { router } from "tinro";
+import { meta } from "tinro";
 import { Tracker } from "meteor/tracker";
 import { SubjectsCollection } from "../entities/subject/subjectApi";
 import { CurriculumsCollection } from "../entities/curriculum/curriculumApi";
@@ -28,13 +28,13 @@ const extractSubjectsSlugsAndPathsFromMatch = (metaMatch) => {
 // https://dilshankelsen.com/understanding-stale-closures-in-javascript/
 export const subjectPlatter = makePlatter(
   ({ update }) => {
-    const meta = router.meta();
-    const breadcrumbsSlugsAndPaths = extractSubjectsSlugsAndPathsFromMatch(meta.match);
+    const {params, match} = meta();
+    const breadcrumbsSlugsAndPaths = extractSubjectsSlugsAndPathsFromMatch(match);
     const breadcrumbsSlugs = breadcrumbsSlugsAndPaths.map(({ slug }) => slug);;
 
     Meteor.subscribe("page.subject", {
-      curriculumSlug: meta.params.curriculumSlug,
-      subjectSlug: meta.params.subjectSlug,
+      curriculumSlug: params.curriculumSlug,
+      subjectSlug: params.subjectSlug,
       breadcrumbsSlugs,
     });
 
@@ -43,11 +43,11 @@ export const subjectPlatter = makePlatter(
     Tracker.autorun(() => {
       const subject =
         SubjectsCollection.findOne({
-          slug: meta.params.subjectSlug,
+          slug: params.subjectSlug,
         }) || {};
       const curriculum =
         CurriculumsCollection.findOne({
-          slug: meta.params.curriculumSlug,
+          slug: params.curriculumSlug,
         }) || {};
       const subjectContents = ContentsCollection.find({
         subjectId: subject?._id,
@@ -78,9 +78,9 @@ export const subjectPlatter = makePlatter(
         loading: !subject,
         subject,
         curriculum,
-        curriculumSlug: meta.params.curriculumSlug,
-        subjectSlug: meta.params.subjectSlug,
-        urlMatch: meta.match,
+        curriculumSlug: params.curriculumSlug,
+        subjectSlug: params.subjectSlug,
+        urlMatch: match,
         subjectContents,
         childrenSubjects,
         breadcrumbs,
